@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Kitchen Result</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<div class="container py-5">
+
+    <h1 class="text-center mb-5">
+        <i class="fa-solid fa-utensils me-2"></i> Your AI Recipe
+    </h1>
+
+    <div class="row g-4">
+
+        <!-- LEFT SIDE (WIDE) -->
+        <div class="col-12 col-lg-7">
+
+            <!-- IMAGE + TOTAL + RECIPE (SAME CARD) -->
+            <div class="card bg-secondary border-0 shadow h-100">
+
+                <!-- IMAGE -->
+                <div class="p-3">
+                    <img src="{{ image_path }}" 
+                         class="img-fluid rounded w-100"
+                         style="object-fit: contain; max-height: 400px;">
+                </div>
+
+                <div class="card-body">
+
+                    <!-- TOTAL KCAL -->
+                    <div class="text-center mb-4">
+                        <span class="badge bg-info text-dark fs-4 px-3 py-2">
+                            <i class="fa-solid fa-fire me-1"></i> {{ data.total_calories }}
+                        </span>
+                    </div>
+
+                    <div class="text-center mt-5">
+                        <a href="/" class="btn btn-outline-light">Try another image</a>
+                    </div>
+
+                    <!-- RECIPE -->
+                    <h4><i class="fa-solid fa-kitchen-set me-2"></i> Recipes</h4>
+
+                    {% for recipe in data.recipes %}
+
+                        <div class="mb-4">
+                            <h5 class="fw-bold">{{ recipe.title }}</h5>
+                            <p class="mb-2">{{ recipe.description }}</p>
+                        
+                            <ol class="ps-3">
+                                {% for step in recipe.steps %}
+                                <li class="mb-2">{{ step }}</li>
+                                {% endfor %}
+                            </ol>
+                        </div>
+                    
+                        <hr style="border-color: rgba(255,255,255,0.1);">
+                    
+                    {% endfor %}
+                    </ol>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDE (NARROW) -->
+        <div class="col-12 col-lg-5 sticky-col">
+
+            <!-- INGREDIENTS -->
+            <div class="card bg-secondary shadow h-100">
+                <div class="card-body">
+                    <h4><i class="fa-solid fa-carrot me-2"></i> Ingredients</h4>
+                    <ul class="list-group list-group-flush">
+                        {% for item in data.ingredients %}
+                        <li class="list-group-item bg-secondary text-white d-flex justify-content-between">
+                            <span>{{ item.name }}</span>
+                            <span class="badge bg-info text-dark">{{ item.calories }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- BACK BUTTON -->
+    <div class="text-center mt-5">
+        <a href="/" class="btn btn-outline-light">Try another image</a>
+    </div>
+
+</div>
+
+</body>
+</html>
