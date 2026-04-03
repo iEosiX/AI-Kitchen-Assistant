@@ -13,7 +13,8 @@ The system uses a AI model (Google Gemini API) to:
 - Detect ingredients from an uploaded image  
 - Estimate calories for each ingredient  
 - Generate multiple recipe suggestions  
-- Provide step-by-step cooking instructions  
+- Provide step-by-step cooking instructions
+- Download generated recipes as pdf  
 
 ---
 
@@ -23,7 +24,8 @@ The system uses a AI model (Google Gemini API) to:
 -  Ingredient detection with calorie estimation  
 -  Generation of 2–3 different recipes  
 -  Total calorie calculation    
--  Clean and responsive UI  
+-  Clean and responsive UI
+-  Download pdf of the recipes  
 
 ---
 
@@ -33,6 +35,7 @@ The system uses a AI model (Google Gemini API) to:
 |------------------------|--------|
 | `app.py`               | Main Flask application (routing & logic) |
 | `services/ai_service.py` | AI integration and prompt handling |
+| `services/pdf_service.py` | Download pdf logic |
 | `templates/`           | HTML templates (UI) |
 | `static/`              | CSS and uploaded images |
 | `static/uploads/`      | Saved user-uploaded images |
@@ -90,6 +93,7 @@ The application uses structured prompts to ensure:
 - google-generativeai
 - pillow
 - python-dotenv
+- reportlab
 
 ## Start Instructions
 
@@ -131,9 +135,12 @@ Go to: http://127.0.0.1:5000/
 ## Testing
 
 ### Functional Tests
-- Upload food image → ingredients and recipes are generated
+- Upload food image -> ingredients and recipes are generated
 
 ### Example Inputs
 - Food images (pizza, salad, fruits, inside of a fridge)
+
+### Download Tests
+- Download recipe pdf -> recipes are downloaded as pdf
 
 ---
