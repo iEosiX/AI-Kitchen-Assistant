@@ -1,4 +1,3 @@
-/* ===== GLOBAL ===== */
 body {
     font-family: 'Segoe UI', sans-serif;
     background: linear-gradient(135deg, #1A1A1A 0%, #312E81 50%, #000000 100%);
@@ -69,11 +68,11 @@ h1, h4 {
 }
 
 .btn-warning:hover {
-    background: #60a5fa; /* lighter blue */
+    background: #60a5fa;
 }
 
 .btn-warning:active {
-    background: #93c5fd !important; /* even lighter blue */
+    background: #93c5fd !important; 
 }
 
 .btn-warning:disabled {
@@ -89,6 +88,21 @@ h1, h4 {
 /* RECIPE */
 ol li {
     line-height: 1.6;
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+#modalImage {
+    max-height: 400px;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px);}
+    to { opacity: 1; transform: translateY(0);}
 }
 
 @media (min-width: 992px) {
