@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Kitchen Result</title>
+    <title>AI Kitchen | Your Personalized AI Meal Plan</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -11,13 +11,16 @@
 </head>
 
 <body>
-
 <div class="container py-5">
 
     <h1 class="text-center mb-5">
         <i class="fa-solid fa-utensils me-2"></i> Your AI Recipe
     </h1>
-
+    {% if data.error %}
+    <div class="alert alert-danger text-center">
+        {{ data.error }}
+    </div>
+    {% endif %}
     <div class="row g-4">
 
         <!-- LEFT SIDE (WIDE) -->
@@ -51,22 +54,41 @@
 
                     {% for recipe in data.recipes %}
 
-                        <div class="mb-4">
-                            <h5 class="fw-bold">{{ recipe.title }}</h5>
-                            <p class="mb-2">{{ recipe.description }}</p>
-                        
-                            <ol class="ps-3">
-                                {% for step in recipe.steps %}
-                                <li class="mb-2">{{ step }}</li>
-                                {% endfor %}
-                            </ol>
+                    <div class="mb-4 
+                        {% if loop.index0 == data.recommended_recipe %} 
+                            border border-warning rounded p-3 
+                        {% endif %}
+                    ">
+
+                        {% if loop.index0 == data.recommended_recipe %}
+                            <span class="badge bg-warning text-dark mb-2">⭐ Recommended</span>
+                        {% endif %}
+
+                        <h5 class="fw-bold">{{ recipe.title }}</h5>
+
+                        <!-- BADGES -->
+                        <div class="d-flex flex-wrap gap-2 mb-2">
+                            <span class="badge bg-success">{{ recipe.difficulty }}</span>
+                            <span class="badge bg-warning text-dark">{{ recipe.time }}</span>
+                            <span class="badge bg-info text-dark">{{ recipe.type }}</span>
                         </div>
                     
-                        <hr style="border-color: rgba(255,255,255,0.1);">
+                        <p class="mb-2">{{ recipe.description }}</p>
                     
-                    {% endfor %}
-                    </ol>
+                        <ol class="ps-3">
+                            {% for step in recipe.steps %}
+                            <li class="mb-2">{{ step }}</li>
+                            {% endfor %}
+                        </ol>
+                    
+                    </div>
 
+                    <hr style="border-color: rgba(255,255,255,0.1);">
+
+                    {% endfor %}
+                    <a href="/download" class="btn btn-success mt-3">
+                        📄 Download Recipe as PDF
+                    </a>
                 </div>
             </div>
 
