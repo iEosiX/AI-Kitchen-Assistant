@@ -27,20 +27,23 @@ def analyze_image(image_path):
         {
           "title": "Recipe name",
           "description": "Short description of the dish",
+          "time": "XX min",
+          "difficulty": "Easy/Medium/Hard",
+          "type": "Healthy/Fast/Vegan/etc",
           "steps": ["Step 1...", "Step 2..."]
         }
       ],
+      "recommended_recipe": 0,
       "total_calories": "XXXX kcal"
     }
 
     Rules:
-    - Generate 2 to 3 different recipes using the ingredients
-    - Each recipe must have a title and description
-    - Each step should be clear and short
-    - Each ingredient must have calories
-    - Also calculate total calories
-    - No explanations
-    - Only JSON
+    - Generate 2 to 3 different recipes
+    - Include cooking time and difficulty
+    - Classify recipe type (Healthy, Fast, etc.)
+    - Mark ONE recommended recipe (index 0,1,2...)
+    - Keep steps short and clear
+    - Only JSON, no explanations
     """
 
     response = model.generate_content([prompt, img])
@@ -48,17 +51,16 @@ def analyze_image(image_path):
     try:
         clean_text = response.text.replace("```json", "").replace("```", "").strip()
         data = json.loads(clean_text)
-    except:
+
+        if not data.get("ingredients"):
+            data["error"] = "⚠️ No food detected in the image. Try another one."
+    except json.JSONDecodeError:
         data = {
-            "ingredients": [],
-            "recipes": [
-                {
-                    "title": "Error",
-                    "description": "",
-                    "steps": ["Error parsing AI response"]
-                }
-            ],
-            "total_calories": "N/A"
+          "ingredients": [],
+          "recipes": [],
+          "recommended_recipe": 0,
+          "total_calories": "N/A",
+          "error": "⚠️ Could not analyze image. Try another one."
         }
 
     return data
