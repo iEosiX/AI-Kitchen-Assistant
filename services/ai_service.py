@@ -53,14 +53,14 @@ def analyze_image(image_path):
         data = json.loads(clean_text)
 
         if not data.get("ingredients"):
-            data["error"] = "⚠️ No food detected in the image. Try another one."
+            data["error"] = "No food detected in the image. Try another one."
     except json.JSONDecodeError:
         data = {
           "ingredients": [],
           "recipes": [],
           "recommended_recipe": 0,
           "total_calories": "N/A",
-          "error": "⚠️ Could not analyze image. Try another one."
+          "error": "Could not analyze image. Try another one."
         }
 
     return data
